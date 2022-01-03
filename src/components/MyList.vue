@@ -1,28 +1,39 @@
 <template>
-  <div>
-    <MyArticle v-for="a in arts" :key="a.date" :title="a.title" :date="a.date"/>
+  <div class="bg">
+    <MyArticle
+      v-for="a in articles" 
+      :key="a.article_id" 
+      :info="a"
+    />
   </div>
 
 </template>
 
 <script>
 import MyArticle from './MyArticle.vue'
+import { inject } from 'vue'
 export default {
   name: "MyList",
   components: {
     MyArticle
   },
-  data() {
+  setup() {
+    let articles = inject('articles'); 
+    console.log(articles)
     return {
-      arts: [
-        {title: "test1", date: "20210899"},
-        {title: "test2", date: "20203432"},
-      ]
+      articles
     }
-  }
+  },
 }
 </script>
 
-<style>
+<style scoped>
 
+  .bg {
+    display: block;
+    margin-top: 20px;
+    background-color: white;
+    background-size: cover;
+    border-radius: 20px;
+  }
 </style>

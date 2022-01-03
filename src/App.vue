@@ -1,22 +1,26 @@
 <template>
-  <main-ref/>
-  <sub-ref/>
-  <my-list/>
+  <Categories/>
+  <MyList/>
 </template>
 
 <script>
-import MainRef from './components/MainRef.vue'
-import SubRef from './components/SubRef.vue'
+import Categories from './components/Categories.vue'
 import MyList from './components/MyList.vue'
-
+import {ref, provide} from 'vue'
 
 export default {
   name: 'App',
+  setup() {
+    let articles = ref([])
+    provide('articles', articles);
+
+    return {articles}
+  },
   components: {
-    MainRef,
-    SubRef,
+    Categories,
     MyList
-  }
+  },
+
 }
 </script>
 
