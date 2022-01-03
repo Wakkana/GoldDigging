@@ -1,24 +1,28 @@
 <template>
   <Categories/>
-  <MyList/>
+  <router-view></router-view>
 </template>
 
 <script>
+import {reactive, provide} from 'vue'
 import Categories from './components/Categories.vue'
-import MyList from './components/MyList.vue'
-import {ref, provide} from 'vue'
-
 export default {
+  components: { Categories },
   name: 'App',
   setup() {
-    let articles = ref([])
-    provide('articles', articles);
+    let info = reactive({
+      categories: [],
+      tags: [],
+      articles: [],
+      currCategories: 0,
+      currTags: 0,
+      sortBy: 'hot'
+    })
+    provide('info', info);
 
-    return {articles}
-  },
-  components: {
-    Categories,
-    MyList
+    return {
+      info
+    }
   },
 
 }

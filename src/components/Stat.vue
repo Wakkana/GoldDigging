@@ -24,14 +24,17 @@ export default {
 
 <style scoped>
 ul {
+  display: flex;
+  flex: row;
   list-style-type: none;
   overflow: hidden;
-  margin: 0;
+  margin-top: 15px;
+  margin-bottom: -10px;
   padding: 0;
+  align-items: center;
 }
 li {
-  float: left;
   margin-right: 40px;
-  font-size: 18px;
+  font-size: 10px;
 }
 </style>
