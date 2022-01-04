@@ -61,6 +61,7 @@ export default {
     function changeTags(val) {
       info.loading = true;
       info.currTags = val;
+      info.sortBy = 'hot';
       updateArticles(info.currTags, info.sortBy)
     }
 
@@ -75,12 +76,12 @@ export default {
       state.value = 'finish'
     }     
     function loadingMore() {
+      if (info.sortBy === 'history') return;
       let scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
       let clientHeight = document.documentElement.clientHeight;
       let scrollHeight = document.documentElement.scrollHeight;
       let bottomOfWindow = (scrollTop + clientHeight) >= (scrollHeight - 40)
       if (scrollTop != 0 && bottomOfWindow && state.value == 'finish') {
-          console.log("diaoyong");
           state.value = 'loading'
           appendArticles()
         }

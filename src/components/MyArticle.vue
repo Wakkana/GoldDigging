@@ -80,7 +80,7 @@ div {
 }
 
 .articles:hover .watchlater{
-  display: flex;
+  visibility: visible;
 }
 .articles > a {
   color: grey;
@@ -91,7 +91,9 @@ div {
 
 .meta-container {
   display: flex;
+  width: 100%;
   align-items: center;
+  justify-content: space-between;
 }
 
 .date {
@@ -100,6 +102,7 @@ div {
   line-height: 22px;
   font-size: 13px;
   flex-shrink: 0;
+  color: #86909c;
 }
 .author {
   display: flex;
@@ -116,7 +119,7 @@ div {
 }
 .tag {
   position: relative;
-  flex-shrink: 0;
+  flex:1 1 auto;
   font-size: 13px;
   line-height: 28px;
   padding: 0 8px;
@@ -161,9 +164,9 @@ div {
 
 
 .watchlater {
-  margin-left:80px;
-  margin-top:-2px;
-  display: none;
+  display: flex;
+  flex: 0 0 10%;
+  visibility: hidden;
 }
 
 </style>    

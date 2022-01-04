@@ -42,6 +42,7 @@
       watch(()=>info.currCategories, ()=> {
         onCategory.value[0] = info.currCategories
         info.loading = true;
+        info.sortBy = 'hot';
         if (info.currCategories > 0 && info.currCategories < 5) {
           info.currTags = info.categories[info.currCategories].children[0].category_id
           info.tags = info.categories[info.currCategories].children

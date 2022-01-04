@@ -61,7 +61,6 @@ export default {
         this.meta.view = res.data.article.article_info.view_count;
         this.meta.historyId = res.data.article.category_info.first_category_id + '/' + res.data.article.category_info.second_category_id;
         console.log(this.meta.historyId)
-
         CookiesSet(this.meta.historyId, id)
       }
     })

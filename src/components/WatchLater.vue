@@ -2,26 +2,16 @@
   <a-list
     header="稍后再看"
     class="watch-later"
-    :loading="loading"
     item-layout="horizontal"
     :rowKey="(item, index)=>index"
     :data-source="articles"
   >
-    <template #loadMore>
-      <div :style="{ textAlign: 'center', marginTop: '12px', height: '32px', lineHeight: '32px' }">
-        <a-spin v-if="loadingmore" />
-        <a-button v-else @click="loadMore()">loading more</a-button>
-      </div>
-    </template>
     <template #renderItem="{ item }">
       <a-list-item>
         <template #actions>
-          <a>edit</a>
-          <a>more</a>
+          <a @click="remove(item.article_id)">删除</a>
         </template>
-        <a-list-item-meta
-          description="??"
-        >
+        <a-list-item-meta>
           <template #title>
             <a href="https://www.antdv.com/" class="later-title">{{ item.article_info.title }}</a>
           </template>
@@ -31,42 +21,33 @@
   </a-list>
 </template>
 <script>
-import { inject, onBeforeMount, ref } from 'vue';
+import { inject, watch,  ref } from 'vue';
 
 export default({
   setup() {
     let info = inject('info');
     let articles = ref([]);
-    let curr = ref(0);
-    let loading = ref(false);
-    let loadingmore = ref(false);
-    onBeforeMount(()=> {
-      console.log(info.watchlater.length)
-      for (let i = 0; i < min(10, info.watchlater.length); i++) {
-        articles.value.push(info.watchlater[i]);
-        curr.value++;
+    watch(()=>info.watchlater.length, ()=> {
+      articles.value.length = 0;
+      articles.value.push(...info.watchlater)
+    })
+
+    function remove(val) {
+      console.log("remove",val)
+      for (let i = 0; i < info.watchlater.length; i++) {
+        if (info.watchlater[i].article_id == val) {
+          info.watchlater.splice(i, 1);
+        }
       }
-    }) 
-    function min(a, b) {
-      return a > b ? b : a;
-    }
-    function loadMore() {
-      loadingmore = true;
-      for (let i = curr.value; i < min(10, info.watchlater.length); i++) {
-        articles.value.push(info.watchlater[i]);
-        curr.value++;
+      for (let i = 0; i < articles.value.length; i++) {
+        if (articles.value[i].article_id == val) {
+          articles.value.splice(i, 1);
+        }
       }
-      if (curr.value === info.watchlater.length) {
-        loading = false;
-      }
-      loadingmore = false;
-      console.log(articles.value);
     }
     return {
       articles,
-      loading,
-      loadingmore,
-      loadMore,
+      remove,
     };
   },
 });
