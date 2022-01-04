@@ -13,7 +13,7 @@
         </template>
         <a-list-item-meta>
           <template #title>
-            <a href="https://www.antdv.com/" class="later-title">{{ item.article_info.title }}</a>
+            <router-link :to="`/articles/${item.article_id}`" class="later-title">{{ item.article_info.title }}</router-link>
           </template>
         </a-list-item-meta>
       </a-list-item>
