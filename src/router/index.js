@@ -8,7 +8,7 @@ const routes = [
       component: ArticleDetail,
     },
     {
-      path:'/:pathMatch(.*)*',
+      path:'/:category(.*)',
       component: MyList,
     }
 ]

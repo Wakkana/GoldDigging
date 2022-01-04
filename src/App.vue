@@ -1,6 +1,15 @@
 <template>
   <Categories/>
-  <router-view></router-view>
+  <router-view v-slot="{ Component }">
+    <transition
+    :name="'fade-transform'"
+    :mode="'out-in'"
+    >
+      <keep-alive>
+        <component :is="Component"/>
+      </keep-alive>
+    </transition>
+  </router-view> 
 </template>
 
 <script>
@@ -16,9 +25,12 @@ export default {
       articles: [],
       currCategories: 0,
       currTags: 0,
-      sortBy: 'hot'
+      sortBy: 'hot',
+      loading: false,
+      watchlater: [],
     })
     provide('info', info);
+    
 
     return {
       info

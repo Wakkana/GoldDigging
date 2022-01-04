@@ -4,6 +4,7 @@
       <div class="author"> {{author_name}} </div> 
       <div class="date">{{date}}</div>
       <div class="tag">{{tags}}</div><br>
+      <a-button class="watchlater" @click="WatchLater()" shape="round" size="small">稍后再看</a-button>
     </div>
 
     <div class="content-wrapper">
@@ -11,29 +12,39 @@
       <div class="content"><a> {{content}}··· </a></div>
       <Stat :watchs="viewcount" :thumbups="diggcount" :comments="commentcount"/>
     </div>
+
   </div>
 </template>
 
 <script>
-import {toRaw} from 'vue'
+import {toRaw, inject} from 'vue'
 import Stat from './Stat.vue'
 var dayjs = require('dayjs')
 export default {
   name: "Article",
-  props:['info'],
+  props:['data'],
   components:{
     Stat,
   },
   setup(props) {
-    let author_name = toRaw(props.info.author_user_info.user_name)
-    let date = dayjs.unix(props.info.article_info.ctime).format('DD/MM/YYYY')
-    let tags = props.info.category_info.first_category_name + ' · ' + props.info.category_info.second_category_name
-    let title = toRaw(props.info.article_info.title)
-    let content = toRaw(props.info.article_info.brief_content)
-    let viewcount = toRaw(props.info.article_info.view_count)
-    let diggcount = toRaw(props.info.article_info.digg_count)
-    let commentcount = toRaw(props.info.article_info.comment_count)
-    let articleId = toRaw(props.info.article_id);
+    let info = inject('info')
+    let author_name = toRaw(props.data.author_user_info.user_name)
+    let date = dayjs.unix(props.data.article_info.ctime).format('DD/MM/YYYY')
+    let tags = props.data.category_info.first_category_name + ' · ' + props.data.category_info.second_category_name
+    let title = toRaw(props.data.article_info.title)
+    let content = toRaw(props.data.article_info.brief_content)
+    let viewcount = toRaw(props.data.article_info.view_count)
+    let diggcount = toRaw(props.data.article_info.digg_count)
+    let commentcount = toRaw(props.data.article_info.comment_count)
+    let articleId = toRaw(props.data.article_id);
+    function WatchLater() {
+      let tmp = info.watchlater;
+      tmp.push(props.data);
+      tmp = [...new Set(tmp)];
+      info.watchlater.length = 0;
+      info.watchlater.push(...tmp);
+      console.log(info.watchlater)
+    }
     return {
       author_name,
       date,
@@ -43,7 +54,8 @@ export default {
       viewcount,
       diggcount,
       commentcount,
-      articleId
+      articleId,
+      WatchLater,
     }
   }
 }
@@ -56,7 +68,6 @@ div {
 .articles {
   display: flex;
   align-items: center;
-  cursor: pointer;
   position: relative;
   background: #fff;
   padding: 12px 20px 0;
@@ -68,6 +79,9 @@ div {
   width: 100%;
 }
 
+.articles:hover .watchlater{
+  display: flex;
+}
 .articles > a {
   color: grey;
   font-size:10px;
@@ -104,7 +118,7 @@ div {
   position: relative;
   flex-shrink: 0;
   font-size: 13px;
-  line-height: 22px;
+  line-height: 28px;
   padding: 0 8px;
   color: #86909c;
 }
@@ -137,13 +151,19 @@ div {
   -webkit-line-clamp: 1;
 }
 .content-wrapper {
-  flex: 1 1 auto;
+  flex: 0 0 auto;
   display: flex;
   flex-direction: column;
   padding-bottom: 12px;
-/*   border-bottom: 1px solid #e5e6eb; */
   margin-top: 10px;
   width: 100%;
 }
 
-</style>
+
+.watchlater {
+  margin-left:80px;
+  margin-top:-2px;
+  display: none;
+}
+
+</style>    
