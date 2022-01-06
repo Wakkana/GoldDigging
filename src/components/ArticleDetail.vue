@@ -24,7 +24,7 @@
         </div>
         <div class="content" v-html="meta.content"></div>
       </div>
-      <Comment :id="id"/>
+      <Comment/>
     </a-layout-content>
 
 <!--     评论 -->
@@ -48,6 +48,7 @@ export default {
     SubGuide,
   },
   activated() {
+    console.log("detail activated");
     const route = useRoute();
     const id = route.params.id;
     getArticleById(id).then((res)=>{

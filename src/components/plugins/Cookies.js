@@ -14,6 +14,5 @@ export function CookiesSet(_, value) {
   let a = JSON.parse(localStorage.getItem(Name));
   a.push(value);
   a = [...new Set(a)]
-  console.log(a);
   localStorage.setItem(Name, JSON.stringify(a))
 }

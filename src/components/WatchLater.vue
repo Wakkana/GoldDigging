@@ -33,7 +33,6 @@ export default({
     })
 
     function remove(val) {
-      console.log("remove",val)
       for (let i = 0; i < info.watchlater.length; i++) {
         if (info.watchlater[i].article_id == val) {
           info.watchlater.splice(i, 1);
